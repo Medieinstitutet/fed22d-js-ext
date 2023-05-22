@@ -5,11 +5,6 @@ import { Todo } from "../models/Todo";
 const todos = ref<Todo[]>([]);
 const userInput = ref("");
 
-const handleInput = (e: Event) => {
-  const theInput = e.target as HTMLInputElement;
-  userInput.value = theInput.value;
-};
-
 const handleSubmit = () => {
   todos.value = [
     ...todos.value,
@@ -30,7 +25,7 @@ const toggleTodo = (id: number) => {
 
 <template>
   <form @submit.prevent="handleSubmit">
-    <input type="text" :value="userInput" @input="handleInput" />
+    <input type="text" v-model="userInput" />
     <button>Spara</button>
   </form>
 
