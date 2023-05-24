@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Todo } from "../models/Todo";
+import TodoView from "./TodoView.vue";
+import AddTodo from "./AddTodo.vue";
 
 const todos = ref<Todo[]>([]);
-const userInput = ref("");
 
-const handleSubmit = () => {
-  todos.value = [
-    ...todos.value,
-    new Todo(userInput.value, false, new Date().getTime()),
-  ];
+const addTodo = (text: string) => {
+  todos.value = [...todos.value, new Todo(text, false, new Date().getTime())];
 };
 
 const toggleTodo = (id: number) => {
@@ -24,30 +22,16 @@ const toggleTodo = (id: number) => {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit">
-    <input type="text" v-model="userInput" />
-    <button>Spara</button>
-  </form>
+  <AddTodo @addtodo="addTodo"></AddTodo>
 
-  <ul>
-    <li
-      @click="() => toggleTodo(todo.id)"
+  <div>
+    <TodoView
+      @toggle="toggleTodo"
       v-for="todo in todos"
-      :class="todo.done ? 'done' : ''"
       :key="todo.id"
-    >
-      {{ todo.text }}
-    </li>
-  </ul>
+      :todo="todo"
+    ></TodoView>
+  </div>
 </template>
 
-<style scoped>
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.done {
-  text-decoration: line-through;
-}
-</style>
+<style scoped></style>
