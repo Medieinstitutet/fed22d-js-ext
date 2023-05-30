@@ -1,9 +1,23 @@
 <script setup lang="ts">
-import MovieSearchApp from "./components/MovieSearchApp.vue";
+import { RouterView, RouterLink } from "vue-router";
 </script>
 
 <template>
-  <MovieSearchApp />
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <RouterLink to="/">Hem</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/movies">Filmer</RouterLink>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <RouterView></RouterView>
+  </main>
 </template>
 
 <style scoped></style>
