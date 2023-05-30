@@ -4,18 +4,21 @@ import { IMovie } from "../models/IMovie";
 import SearchForm from "./SearchForm.vue";
 import MovieView from "./MovieView.vue";
 import { getMovies } from "../services/OmdbService";
+import { useLoadingStore } from "../stores/loadingStore";
 
 const movies = ref<IMovie[]>([]);
 
-onMounted(() => {
+const store = useLoadingStore();
+
+onMounted(async () => {
   const searchText = localStorage.getItem("searchText") || "star";
-  getMovies(searchText).then((moviesFromApi) => {
-    movies.value = moviesFromApi;
-  });
+  await searchMovies(searchText);
 });
 
 const searchMovies = async (searchText: string) => {
+  store.setLoading(true);
   movies.value = await getMovies(searchText);
+  store.setLoading(false);
   localStorage.setItem("searchText", searchText);
 };
 </script>
