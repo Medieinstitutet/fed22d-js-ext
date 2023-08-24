@@ -1,30 +1,9 @@
-import { useCookies } from "react-cookie";
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
+import { Router } from "./Router";
 
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(["FED22D"]);
-
-  const handleSetCookie = () => {
-    const d = new Date();
-    setCookie("FED22D", "The best class ever!", {
-      expires: new Date(d.setTime(d.getTime() + 10 * 24 * 60 * 60 * 1000)),
-    });
-  };
-
-  const handleRemoveCookie = () => {
-    removeCookie("FED22D");
-  };
-
-  console.log(cookies.FED22D);
-
-  return (
-    <>
-      <section>
-        <button onClick={handleSetCookie}>Spara cookie</button>
-        <button onClick={handleRemoveCookie}>Remove cookie</button>
-      </section>
-    </>
-  );
+  return <RouterProvider router={Router}></RouterProvider>;
 }
 
 export default App;
